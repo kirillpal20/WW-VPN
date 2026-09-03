@@ -7,7 +7,7 @@ echo "==> Устанавливаю Python-зависимости"
 pip install --no-cache-dir -r requirements.txt
 
 echo "==> Скачиваю xray-core"
-XRAY_VERSION="v25.1.30"   # можно обновить на актуальную с https://github.com/XTLS/Xray-core/releases
+XRAY_VERSION="v26.7.28"   # можно обновить на актуальную с https://github.com/XTLS/Xray-core/releases
 XRAY_URL="https://github.com/XTLS/Xray-core/releases/download/${XRAY_VERSION}/Xray-linux-64.zip"
 
 curl -L -o xray.zip "$XRAY_URL"
