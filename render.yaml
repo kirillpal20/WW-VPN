@@ -1,0 +1,28 @@
+services:
+  # Бот + выдача подписки + внутренний эндпоинт для запуска проверки
+  - type: web
+    name: vpn-sub-bot
+    runtime: python
+    plan: free
+    buildCommand: "bash build.sh"
+    startCommand: "XRAY_BIN=./xray uvicorn bot_server:app --host 0.0.0.0 --port $PORT"
+    envVars:
+      - key: BOT_TOKEN
+        sync: false          # впишешь вручную в панели Render (секрет)
+      - key: BASE_URL
+        sync: false          # впишешь после первого деплоя, когда узнаешь адрес сервиса
+      - key: WEBHOOK_SECRET
+        generateValue: true  # Render сам сгенерирует случайную строку
+      - key: CHECKER_SECRET
+        generateValue: true  # для этого тоже — используется в ссылке для будильника
+      - key: REDIS_URL
+        fromService:
+          name: vpn-sub-redis
+          type: keyvalue
+          property: connectionString
+
+  # Хранилище (общая база для бота и проверки серверов)
+  - type: keyvalue
+    name: vpn-sub-redis
+    plan: free
+    ipAllowList: []
